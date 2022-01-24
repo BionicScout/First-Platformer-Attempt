@@ -564,7 +564,7 @@ MonoBehaviour:
   leftWallCheck: {fileID: 1653037253}
   rightWallCheck: {fileID: 813811316}
   groundRadius: 0.3
-  wallRadius: 0.3
+  wallSize: {x: 0.1, y: 0.5}
   dashTime: 1
   dashSpeed: 12
 --- !u!61 &338381719
