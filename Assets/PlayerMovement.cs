@@ -150,12 +150,15 @@ public class PlayerMovement : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print("Collided");
         if(collision.gameObject.tag == "Harmful")
         {
-            print("spike");
             restart();
         }
+
+        if (collision.gameObject.tag == "Exit") {
+            print("Exit");
+        }
+
     }
 
     private void restart() {

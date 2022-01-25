@@ -8,6 +8,7 @@ TagManager:
   - Ground
   - Sword
   - Harmful
+  - Exit
   layers:
   - Default
   - TransparentFX
