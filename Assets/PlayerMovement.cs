@@ -23,7 +23,6 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask groundLayer;
 
     public Transform groundCheck;
-    public Transform ceilingCheck;
     public Transform leftWallCheck;
     public Transform rightWallCheck;
 
@@ -36,8 +35,17 @@ public class PlayerMovement : MonoBehaviour {
     private float dashDir;
     private bool lastFace = false; //False = left      True = right
 
-    //Restart
+//Restart
     Vector2 startPos;
+
+//Sword
+    public LayerMask swordLayer;
+    public Transform swordCheck;
+
+    public GameObject sword;
+    private Vector2 direction;
+    private short swordState;
+    
 
     void Start() {
         rb = (Rigidbody2D) this.GetComponent(typeof(Rigidbody2D));
@@ -53,7 +61,6 @@ public class PlayerMovement : MonoBehaviour {
     //Collision Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
         isOnWall = Physics2D.OverlapCircle(leftWallCheck.position, wallRadius, groundLayer) || Physics2D.OverlapCircle(rightWallCheck.position, wallRadius, groundLayer);
-        hitCeiling = Physics2D.OverlapCircle(ceilingCheck.position, wallRadius, groundLayer);
 
     //Dash Rest
         if(currentAirTime > dashTime && (isGrounded || isOnWall))
@@ -65,13 +72,15 @@ public class PlayerMovement : MonoBehaviour {
         if (currentAirTime != 0 && currentAirTime <= dashTime) {
             dash();
         }
-        //else
-        //    isDashing = false;
+
     //Last direction moved in or the direction facing
         if (horizontal > 0)
             lastFace = true;
         else if (horizontal < 0)
             lastFace = false;
+
+        //Attack
+        attack();
     }
 
     void Update() {
@@ -92,10 +101,6 @@ public class PlayerMovement : MonoBehaviour {
             timeOnWall = 0;
         }
 
-    //Ceiling Check
-        if (hitCeiling) {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlideSpeed, 0));
-        }
 
     //Dash Check
         if (Input.GetButtonDown("Fire3") && (currentAirTime == 0 || currentAirTime > dashTime)) { //First Dash Check
@@ -108,7 +113,13 @@ public class PlayerMovement : MonoBehaviour {
                 dashDir = -dashDir;
 
             dash();
-        } 
+        }
+
+        //Attack
+        if (Input.GetKeyDown(KeyCode.J)) {
+            direction = new Vector2(1, 0);
+            swordState = 1;
+        }
     }
 
     private void jump(short jumpState) {
@@ -146,6 +157,31 @@ public class PlayerMovement : MonoBehaviour {
             rb.velocity = new Vector2(-dashSpeed, 0);
         else
             rb.velocity = new Vector2(dashSpeed, 0);
+    }
+
+    private void attack() {
+        if (swordState == 1) //Sword Out
+        {
+            sword.transform.position = Vector2.MoveTowards(sword.transform.position, direction, .01f);
+
+            float distance = Vector2.Distance(sword.transform.position, direction);
+            if (distance < 0.05)
+            {
+                swordState = 2; //Sword in
+            }
+            print("out");
+        }
+        else if(swordState == 2) //Sword In
+        {
+            sword.transform.position = Vector2.MoveTowards(sword.transform.position, new Vector2(0, 0), .01f);
+
+            float distance = Vector2.Distance(sword.transform.position, new Vector2(0, 0));
+            if (distance < 0.05)
+            {
+                swordState = 0; //sword stay
+            }
+            print("in");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
