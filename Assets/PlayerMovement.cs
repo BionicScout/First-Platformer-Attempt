@@ -33,23 +33,19 @@ public class PlayerMovement : MonoBehaviour {
 //Dash 
     public float dashTime = 1;
     private float currentAirTime;
-    //private bool canDash = true;
     private float dashDir;
     private bool lastFace = false; //False = left      True = right
-   //private bool isDashing = false;
+
+    //Restart
+    Vector2 startPos;
 
     void Start() {
         rb = (Rigidbody2D) this.GetComponent(typeof(Rigidbody2D));
         currentAirTime = dashTime + 1;
+        startPos = transform.position;
     }
 
     void FixedUpdate() {
-        // print(currentAirTime);
-
-        if (dashDir > 0)
-            print("Right - On wall: " + isOnWall);
-        else
-            print("Left - On wall: " + isOnWall);
     //Movement
         horizontal = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
@@ -150,5 +146,19 @@ public class PlayerMovement : MonoBehaviour {
             rb.velocity = new Vector2(-dashSpeed, 0);
         else
             rb.velocity = new Vector2(dashSpeed, 0);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        print("Collided");
+        if(collision.gameObject.tag == "Harmful")
+        {
+            print("spike");
+            restart();
+        }
+    }
+
+    private void restart() {
+        transform.position = startPos;
     }
 }

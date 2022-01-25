@@ -7,6 +7,7 @@ TagManager:
   - SolidSurface
   - Ground
   - Sword
+  - Harmful
   layers:
   - Default
   - TransparentFX
