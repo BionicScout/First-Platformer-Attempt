@@ -38,27 +38,25 @@ public class GreenEnemy : MonoBehaviour
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.K)) {
-            dead();
-        }
+       
         if (Input.GetKeyDown(KeyCode.R))
         {
             alive();
         }
     }
 
-    void dead() {
+    public void dead() {
         platform.GetComponent<BoxCollider2D>().enabled = true;
         platform.GetComponent<SpriteRenderer>().enabled = true;
 
-        transform.GetChild(0).GetComponent<CircleCollider2D>().enabled = false;
+        transform.GetComponent<CircleCollider2D>().enabled = false;
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
     }
-    void alive() {
+    public void alive() {
         platform.GetComponent<BoxCollider2D>().enabled = !true;
         platform.GetComponent<SpriteRenderer>().enabled = !true;
 
-        transform.GetChild(0).GetComponent<CircleCollider2D>().enabled = !false;
+        transform.GetComponent<CircleCollider2D>().enabled = !false;
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = !false;
     }
 }

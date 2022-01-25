@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4361238328662916372}
   - component: {fileID: 3757069898685511246}
-  - component: {fileID: 3654243549802580994}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,22 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3654243549802580994
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3455794682333348201}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!1 &8060783327390724325
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,9 +92,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5460916932987581876}
   - component: {fileID: 3002751490260771854}
-  m_Layer: 0
+  - component: {fileID: 6208795903171283620}
+  m_Layer: 7
   m_Name: Green Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,3 +130,20 @@ MonoBehaviour:
   pos1: {x: 5, y: 4}
   pos2: {x: 2, y: 3}
   velocity: 0
+  platform: {fileID: 0}
+--- !u!58 &6208795903171283620
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060783327390724325}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.54

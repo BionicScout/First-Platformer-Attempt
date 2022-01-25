@@ -9,6 +9,7 @@ TagManager:
   - Sword
   - Harmful
   - Exit
+  - Enemy
   layers:
   - Default
   - TransparentFX

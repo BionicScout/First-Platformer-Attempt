@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour {
 //Sword
     public LayerMask swordLayer;
     public Transform swordCheck;
+    public float swordCheckRadius = 0.5f;
+    private bool isHit;
 
     public GameObject sword;
     private Vector2 direction;
@@ -61,6 +63,7 @@ public class PlayerMovement : MonoBehaviour {
     //Collision Check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, groundLayer);
         isOnWall = Physics2D.OverlapCircle(leftWallCheck.position, wallRadius, groundLayer) || Physics2D.OverlapCircle(rightWallCheck.position, wallRadius, groundLayer);
+        isHit = Physics2D.OverlapCircle(swordCheck.position, swordCheckRadius, swordLayer);
 
     //Dash Rest
         if(currentAirTime > dashTime && (isGrounded || isOnWall))
@@ -79,8 +82,19 @@ public class PlayerMovement : MonoBehaviour {
         else if (horizontal < 0)
             lastFace = false;
 
-        //Attack
+    //Attack
         attack();
+
+        if (isHit && swordState != 0) {
+            Collider2D other = Physics2D.OverlapCircle(swordCheck.position, swordCheckRadius, swordLayer);
+       
+            if (other.gameObject.tag == "Enemy") {
+                other.gameObject.GetComponent<GreenEnemy>().dead();
+            }
+
+            jump(1);
+        }
+        
     }
 
     void Update() {
@@ -115,9 +129,28 @@ public class PlayerMovement : MonoBehaviour {
             dash();
         }
 
-        //Attack
-        if (Input.GetKeyDown(KeyCode.J)) {
-            direction = new Vector2(1, 0);
+    //Attack
+        if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S)) { //Down Attack
+            direction = new Vector3(0, -0.75f, 2);
+            sword.transform.rotation = Quaternion.Euler(sword.transform.rotation.x, sword.transform.rotation.y, -90);
+            
+            swordState = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.W)) { //Up Attack
+            direction = new Vector3(0, 0.75f, 2);
+            sword.transform.rotation = Quaternion.Euler(sword.transform.rotation.x, sword.transform.rotation.y, 90);
+
+            swordState = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.J)) { //Right/Left Attack
+            if (lastFace == true) { // Right Face
+                sword.transform.rotation = Quaternion.Euler(sword.transform.rotation.x, sword.transform.rotation.y, 0);
+                direction = new Vector3(0.75f, 0, 2);
+            } else if(lastFace == false) { //Left Face
+                sword.transform.rotation = Quaternion.Euler(sword.transform.rotation.x, sword.transform.rotation.y, 180);
+                direction = new Vector3(-0.75f, 0, 2);
+            }
+            
             swordState = 1;
         }
     }
@@ -131,9 +164,6 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         isGrounded = false;
-
-        //canDash = true;
-        //currentAirTime = 0;
     }
 
     private void againstWall() {
@@ -160,27 +190,21 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void attack() {
-        if (swordState == 1) //Sword Out
-        {
-            sword.transform.position = Vector2.MoveTowards(sword.transform.position, direction, .01f);
+        if (swordState == 1) {//Sword Out
+            sword.transform.localPosition = Vector3.MoveTowards(sword.transform.localPosition, direction, .5f);
 
-            float distance = Vector2.Distance(sword.transform.position, direction);
-            if (distance < 0.05)
-            {
+            float distance = Vector2.Distance(sword.transform.localPosition, direction);
+            if (distance < 0.05) { 
                 swordState = 2; //Sword in
             }
-            print("out");
         }
-        else if(swordState == 2) //Sword In
-        {
-            sword.transform.position = Vector2.MoveTowards(sword.transform.position, new Vector2(0, 0), .01f);
+        else if(swordState == 2) { //Sword In
+            sword.transform.localPosition = Vector3.MoveTowards(sword.transform.localPosition, new Vector3(0, 0, 2), .5f);
 
-            float distance = Vector2.Distance(sword.transform.position, new Vector2(0, 0));
-            if (distance < 0.05)
-            {
+            float distance = Vector2.Distance(sword.transform.localPosition, new Vector3(0, 0, 2));
+            if (distance < 0.05) {
                 swordState = 0; //sword stay
             }
-            print("in");
         }
     }
 
