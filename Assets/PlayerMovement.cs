@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
     Rigidbody2D rb;
@@ -92,7 +93,8 @@ public class PlayerMovement : MonoBehaviour {
                 other.gameObject.GetComponent<GreenEnemy>().dead();
             }
 
-            jump(1);
+            if(Input.GetKey(KeyCode.S))
+              jump(1);
         }
         
     }
@@ -157,7 +159,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void jump(short jumpState) {
         if (jumpState == 1) { //Ground Jump
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed* 0.75f);
         }
         else if (jumpState == 2) {  //Wall Jump
             rb.velocity = new Vector2(-rb.velocity.x, jumpSpeed);
@@ -216,7 +218,7 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         if (collision.gameObject.tag == "Exit") {
-            print("Exit");
+            SceneManager.LoadScene();
         }
 
     }

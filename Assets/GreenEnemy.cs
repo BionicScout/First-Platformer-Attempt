@@ -15,6 +15,7 @@ public class GreenEnemy : MonoBehaviour
     {
         transform.position = pos1;
         direction = true;
+        alive();
     }
 
     // Update is called once per frame
