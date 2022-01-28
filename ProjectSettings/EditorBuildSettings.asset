@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main Menu.unity
+    path: Assets/Scenes/Menus/Main Menu.unity
     guid: 47e6b3160a7ba6f43aa39add943e36dc
   - enabled: 1
     path: Assets/Scenes/Area 1 - (Basics)/Level 1.unity
@@ -23,4 +23,25 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Area 1 - (Basics)/Level 5.unity
     guid: bdacfa948a873b54b9ec54eeccaa45f3
+  - enabled: 1
+    path: Assets/Scenes/Area 2 - (Enemies)/Level 6.unity
+    guid: 80befe0aae6098143816351fa9968f84
+  - enabled: 1
+    path: Assets/Scenes/Area 2 - (Enemies)/Level 7.unity
+    guid: 5769ab1c7e312e5469df62cc97891e78
+  - enabled: 1
+    path: Assets/Scenes/Area 2 - (Enemies)/Level 8.unity
+    guid: 372f043420071b24ca6a5cb6a6864e8a
+  - enabled: 1
+    path: Assets/Scenes/Area 2 - (Enemies)/Level 9.unity
+    guid: c16074d83123f7642808ab7ac361fee2
+  - enabled: 1
+    path: Assets/Scenes/Final Level.unity
+    guid: 95fd58d8ad5e8854983b12d31e1aafbe
+  - enabled: 1
+    path: Assets/Scenes/Menus/End Screen.unity
+    guid: e8d26360f9b089c43a9de6ab0ddfe12e
+  - enabled: 1
+    path: Assets/Scenes/Menus/GameOver.unity
+    guid: 388be601329bcb54298395902ed7fb3e
   m_configObjects: {}

@@ -8,6 +8,9 @@ public class GreenEnemy : MonoBehaviour
     public float velocity;
 
     public GameObject platform;
+    public float deadTime;
+
+    private float currentDeadTime;
 
     bool direction; //False = pos1    True = pos2
 
@@ -36,6 +39,14 @@ public class GreenEnemy : MonoBehaviour
                 direction = true;
             }
         }
+
+    //Respawn Time
+        currentDeadTime += Time.deltaTime;
+
+        if (deadTime*2 > currentDeadTime && currentDeadTime >= deadTime)
+        {
+            alive();
+        }
     }
 
     void Update() {
@@ -47,6 +58,8 @@ public class GreenEnemy : MonoBehaviour
     }
 
     public void dead() {
+        currentDeadTime = 0;
+
         platform.GetComponent<BoxCollider2D>().enabled = true;
         platform.GetComponent<SpriteRenderer>().enabled = true;
 
@@ -54,6 +67,8 @@ public class GreenEnemy : MonoBehaviour
         transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
     }
     public void alive() {
+        currentDeadTime = deadTime * 1;
+
         platform.GetComponent<BoxCollider2D>().enabled = !true;
         platform.GetComponent<SpriteRenderer>().enabled = !true;
 
